@@ -8,6 +8,11 @@ class Book < ApplicationRecord
   validates :title,presence:true
   validates :body,presence:true,length:{maximum:200}
 
+  scope :created_today, -> { where(created_at: Time.zone.now.all_day) }
+  scope :created_yesterday, -> { where(created_at: 1.day.ago.all_day) }
+  scope :created_week, -> { where(created_at: Time.zone.now.all_week) }
+  scope :created_last_week, -> { where(created_at: 1.week.ago.all_week)}
+
   def self.looks(search, word)
     if search == "perfect_match"
       @book = Book.where("title LIKE?","#{word}")
