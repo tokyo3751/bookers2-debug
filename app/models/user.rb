@@ -13,9 +13,8 @@ class User < ApplicationRecord
 
   has_many :followings, through: :relationships, source: :followed
   has_many :followers, through: :reverse_of_relationships, source: :follower
-
   has_many :favorited_books, through: :favorites, source: :book
-
+  has_many :view_counts, dependent: :destroy
   has_many :user_rooms
   has_many :chats
 
