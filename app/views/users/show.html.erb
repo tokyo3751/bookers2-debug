@@ -16,16 +16,7 @@
       <%= render 'books/index',books: @books,user: @user %>
     <div class = "table_width">
       <table class="table table-bordered">
-        <%= form_with url: user_search_path(@user), method: :get do |f| %>
-         <%= f.date_field :create_at %>
-         <%= f.submit '検索', class: 'btn btn-primary' %>
-        <% end %>
-
-        <div id="search_result">
-          <% if @search_book.present? %>
-           <%= render 'search', search_book: @search_book %>
-          <% end %>
-        </div>
+        <%= render 'daily_posts_form', user: @user %>
         <h2>投稿数の前日比・先週比</h2>
         <thead>
           <tr>
