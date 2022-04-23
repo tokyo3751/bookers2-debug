@@ -16,6 +16,16 @@
       <%= render 'books/index',books: @books,user: @user %>
     <div class = "table_width">
       <table class="table table-bordered">
+        <%= form_with url: user_search_path(@user), method: :get do |f| %>
+         <%= f.date_field :create_at %>
+         <%= f.submit '検索', class: 'btn btn-primary' %>
+        <% end %>
+
+        <div id="search_result">
+          <% if @search_book.present? %>
+           <%= render 'search', search_book: @search_book %>
+          <% end %>
+        </div>
         <h2>投稿数の前日比・先週比</h2>
         <thead>
           <tr>
@@ -60,7 +70,68 @@
           </tr>
         </tbody>
       </table>
+      <h2>７日分の投稿数</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>６日前</th>
+            <th>５日前</th>
+            <th>４日前</th>
+            <th>３日前</th>
+            <th>２日前</th>
+            <th>１日前</th>
+            <th>今日</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th><%= @books.created_6days.count %></th>
+            <th><%= @books.created_5days.count %></th>
+            <th><%= @books.created_4days.count %></th>
+            <th><%= @books.created_3days.count %></th>
+            <th><%= @books.created_2days.count %></th>
+            <th><%= @yesterday_book.count %></th>
+            <th><%= @today_book.count %></th>
+          </tr>
+        </tbody>
+      </table>
       </div>
     </div>
   </div>
 </div>
+<canvas id="myChart"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
+  <script>
+    var ctx = document.getElementById('myChart');
+    var chart = new Chart(ctx, {
+        // 作成したいチャートのタイプ
+        type: 'line',
+        // データセットのデータ
+        data: {
+            labels: ["6日前", "5日前", "4日前", "3日前", "2日前", "1日前", "今日"],
+            datasets: [{
+                label: "投稿した本の数",
+                data: [
+                    <%= @books.created_6days.count %>,
+                    <%= @books.created_5days.count %>,
+                    <%= @books.created_4days.count %>,
+                    <%= @books.created_3days.count %>,
+                    <%= @books.created_2days.count %>,
+                    <%= @yesterday_book.count %>,
+                    <%= @today_book.count %>
+                ],
+                backgroundColor: 'rgba(0,0,0,0)',
+                borderColor: 'rgba(0,0,255,1)',
+            }]
+        },
+
+        // 設定オプション
+        options: {
+          title: {
+            display: true,
+            text: '7日間の投稿数の比較'
+          },
+          responsive: true,
+        }
+    });
+  </script>
