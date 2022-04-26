@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "search" => "searches#search"
   get "chat/:id" => "chats#show", as: "chat"
 
+  resources :groups, only: [:new,:index,:show,:create,:edit,:update]
   resources :chats, only: [:create]
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update]do
    resources :book_comments, only: [:create,:destroy]
