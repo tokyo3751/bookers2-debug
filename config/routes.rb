@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'group_users/create'
+  get 'group_users/destroy'
   get 'relationships/followings'
   get 'relationships/followers'
   devise_for :users
@@ -7,7 +9,9 @@ Rails.application.routes.draw do
   get "search" => "searches#search"
   get "chat/:id" => "chats#show", as: "chat"
 
-  resources :groups, only: [:new,:index,:show,:create,:edit,:update]
+  resources :groups do
+    resource :group_users, only: [:create,:destroy]
+  end
   resources :chats, only: [:create]
   resources :books, only: [:index,:show,:edit,:create,:destroy,:update]do
    resources :book_comments, only: [:create,:destroy]
@@ -18,5 +22,6 @@ Rails.application.routes.draw do
     get 'followings' => 'relationships#followings', as: 'followings'
     get 'followers' => 'relationships#followers', as: 'followers'
     get "daily_posts" => "users#daily_posts"
+
   end
 end

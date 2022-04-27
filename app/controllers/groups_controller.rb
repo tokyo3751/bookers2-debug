@@ -10,6 +10,7 @@ class GroupsController < ApplicationController
   def show
     @book = Book.new
     @group = Group.find(params[:id])
+    @groupowner = User.find(@group.owner_id)
   end
 
   def new
