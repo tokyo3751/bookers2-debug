@@ -36,6 +36,7 @@ class GroupsController < ApplicationController
     else
       render "edit"
     end
+
   end
 
   private
