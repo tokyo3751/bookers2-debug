@@ -30,6 +30,9 @@
           <td>
             <p class="view-count">閲覧数: <%= @book_detail.view_counts.count %></p>
           </td>
+          <td>
+            <%= render "static_rate", book: @book %>
+          </td>
         </tr>
         <tr>
           <td class="book_comments">

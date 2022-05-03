@@ -12,7 +12,11 @@ import "popper.js"
 import "bootstrap"
 import '@fortawesome/fontawesome-free/js/all';
 import "../stylesheets/application"
+window.jQuery = window.$ = require('jquery')
+require("packs/raty") //追加
 
 Rails.start()
 //Turbolinks.start()
 ActiveStorage.start()
+
+// $(document).on('turbolinks:load', function() {
