@@ -15,15 +15,17 @@ class BooksController < ApplicationController
 
   def index
     @user = current_user
-    @books = Book.all.sort {|a,b| b.favorited_users.size <=> a.favorited_users.size}
+    @books = Book.all.order(params[:sort])
     @book = Book.new
   end
 
   def create
     @book = Book.new(book_params)
     @book.user_id = current_user.id
+    tag_list = params[:book][:tag_name].split(',')
     #binding.pry
     if @book.save
+      @book.save_tags(tag_list)
       redirect_to book_path(@book), notice: "You have created book successfully."
     else
       @user = current_user
