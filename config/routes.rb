@@ -26,4 +26,5 @@ Rails.application.routes.draw do
     get "daily_posts" => "users#daily_posts"
 
   end
+   get "search_book" => "books#search_book"
 end
